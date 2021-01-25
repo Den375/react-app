@@ -1,3 +1,8 @@
+const UPDATE_NEW_POST_TEXT  = 'UPDATE-NEW-POST-TEXT';
+const ADD_POST  = 'ADD-POST';
+const UPDATE_NEW_MESSAGE_TEXT  = 'UPDATE-NEW-MESSAGE-TEXT';
+const ADD_MESSAGE  = 'ADD-MESSAGE';
+
 let store = {
     _state: {
         dialogsPage: {
@@ -10,7 +15,7 @@ let store = {
                 {id: 6, name: 'Valera'}],
             messages: [
                 {id: 1, message: 'оооооппаа'},
-                {id: 2, message: 'How is your it-kamasutra?'},
+                {id: 2, message: 'How is your ffa?'},
                 {id: 3, message: 'Yo'},
                 {id: 4, message: 'dfdo'},
                 {id: 5, message: 'ado'}],
@@ -67,13 +72,18 @@ let store = {
 
     dispatch(action) {
         switch (action.type) {
-            case 'UPDATE-NEW-POST-TEXT': this._updateNewPostText(action.newText); break;
-            case 'ADD-POST': this._addPost(); break;
-            case 'UPDATE-NEW-MESSAGE-TEXT': this._updateNewMessageText(action.newText); break;
-            case 'ADD-MESSAGE': this._addMessage(); break;
+            case UPDATE_NEW_POST_TEXT: this._updateNewPostText(action.newText); break;
+            case ADD_POST: this._addPost(); break;
+            case UPDATE_NEW_MESSAGE_TEXT: this._updateNewMessageText(action.newText); break;
+            case ADD_MESSAGE: this._addMessage(); break;
         }
     }
 }
+
+export const updateNewPostTextActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text});
+export const addPostActionCreator = () => ({type: ADD_POST});
+export const updateNewMessageTextActionCreator = (text) => ({type: UPDATE_NEW_MESSAGE_TEXT, newText: text});
+export const addMessageActionCreator = () => ({type: ADD_MESSAGE});
 
 export default store;
 window.store = store;
