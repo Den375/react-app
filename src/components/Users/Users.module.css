@@ -1,8 +1,7 @@
 .userContainer {
     display: grid;
-    grid-template-columns: auto 1fr ;
-    grid-template-rows: 1fr 1fr;
-    padding: 10px;
+    grid-template-columns: 85px 1fr ;
+    margin: 10px;
 }
 
 .class1 {
@@ -14,10 +13,12 @@
     background-color: #ff97b4;
     padding: 10px;
     display: grid;
-    grid-template-columns: 1fr 50px ;
+    grid-template-columns: 1fr 150px ;
+    grid-template-rows: 1fr 1fr 1fr;
 }
 
 .class1 img {
     width: 50px;
     border-radius: 50px;
 }
+
