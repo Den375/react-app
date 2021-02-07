@@ -15,13 +15,13 @@ const Users = (props) => {
            followed: true, fullName: 'Andrey L.', status: 'I`m love ReactJs', location: {city: 'Kopyl', country: 'Belarus'}}
    ])*/
 
-    if (props.users.length === 0) axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+  const getUsers = () => { if (props.users.length === 0) axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
         props.setUsers(response.data.items)
     })
-
-
+  }
 
     return <div>
+        <button onClick={getUsers}>Get Users</button>
         {props.users.map(u => <div className={s.userContainer} key={u.id}>
             <div className={s.class1}>
                 <div>
