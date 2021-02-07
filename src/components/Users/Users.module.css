@@ -1,0 +1,23 @@
+.userContainer {
+    display: grid;
+    grid-template-columns: auto 1fr ;
+    grid-template-rows: 1fr 1fr;
+    padding: 10px;
+}
+
+.class1 {
+    background-color: gray;
+    padding: 10px;
+}
+
+.class2 {
+    background-color: #ff97b4;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 50px ;
+}
+
+.class1 img {
+    width: 50px;
+    border-radius: 50px;
+}
