@@ -1,12 +1,10 @@
 import preloader from "../../../assets/images/126.svg";
 import React from "react";
 
-const Preloader = (props) => {
+const Preloader = () => {
     return <div>
-        {props.isFetching
-            ? <img src={preloader} alt="preloader"/>
-            : null}
-    </div>
+             <img src={preloader} alt="preloader"/>
+           </div>
 }
 
 export default Preloader;
