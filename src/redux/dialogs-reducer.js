@@ -10,11 +10,11 @@ const initialState = {
         {id: 5, name: 'Viktor'},
         {id: 6, name: 'Valera'}],
     messages: [
-        {id: 1, message: 'оооооппаа'},
-        {id: 2, message: 'How is your ffa?'},
-        {id: 3, message: 'Yo'},
-        {id: 4, message: 'dfdo'},
-        {id: 5, message: 'ado'}],
+        {id: 1, message: 'Привет'},
+        {id: 2, message: 'Как дела?'},
+        {id: 3, message: '?'},
+        {id: 4, message: 'Ты там точно реакт учишь?'},
+        {id: 5, message: 'Или ерундой страдаешь'}],
     newMessageText: ''
 }
 

@@ -5,5 +5,12 @@
 
 .header img {
     width: 20px;
+    margin: 15px;
+}
+
+.header a {
+    text-decoration: none;
+    float: right;
+    margin: 15px;
 }
 
