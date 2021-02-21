@@ -2,7 +2,6 @@ import React from "react";
 import s from "./Users.module.css"
 import userDefPhoto from '../../assets/images/defaultAvatar.jpg'
 import {NavLink} from "react-router-dom";
-import {usersAPI} from "../../api/api";
 
 let Users = (props) => {
 
@@ -30,26 +29,10 @@ let Users = (props) => {
                     </div>
                     <div>
                         {u.followed
-                            ? <button  disabled={props.isFollowingProgress.some(id => id === u.id)} onClick={() => {
-                                props.toggleIsFollowingProgress(true, u.id)
-                                usersAPI.unFollow(u.id).then( response => {
-                                    if (response.resultCode === 0) {
-                                        props.unFollow(u.id)
-                                    }
-                                    props.toggleIsFollowingProgress(false, u.id)
-                                })
-                              }
-                            }>Unfollow</button>
-                            : <button disabled={props.isFollowingProgress.some(id => id === u.id)}  onClick={() => {
-                                props.toggleIsFollowingProgress(true, u.id)
-                                usersAPI.follow(u.id).then( response => {
-                                    if (response.resultCode === 0) {
-                                        props.follow(u.id)
-                                    }
-                                    props.toggleIsFollowingProgress(false, u.id)
-                                })
-                              }
-                            }>Follow</button>}
+                            ? <button  disabled={props.isFollowingProgress.some(id => id === u.id)}
+                                       onClick={() => {props.unfollow(u.id)}}>Unfollow</button>
+                            : <button disabled={props.isFollowingProgress.some(id => id === u.id)}
+                                      onClick={() => {props.follow(u.id)}}>Follow</button>}
                     </div>
                 </div>
                 <div className={s.class2}>
