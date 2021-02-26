@@ -20,7 +20,8 @@ const ProfileInfo = (props) => {
                 <img src={props.profile.photos.large} alt="photo"/>
                  <div>{props.profile.fullName} </div>
                  <div>{props.profile.aboutMe} </div>
-                 <ProfileStatus status={'Мой статус захардкодженный'}/>
+                 <ProfileStatus status={props.status}
+                                updateStatus={props.updateStatus}/>
             </div>
         </div>
     )
