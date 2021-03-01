@@ -29,6 +29,6 @@ const Login = props => {
              <LoginReduxForm onSubmit={submit}/>
            </div>
 }
-// formData приходит , но в консоль не выводится
+// formData приходит , но в консоль не выводится, что-то с консолью
 export default Login;
 
