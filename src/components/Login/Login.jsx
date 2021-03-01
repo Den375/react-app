@@ -21,14 +21,14 @@ const LoginForm = props => {
 const LoginReduxForm = reduxForm({form: 'login'})(LoginForm)
 
 const Login = props => {
-    const onSubmit = (formData) => {
+    const submit = (formData) => {
         console.log(formData)
     }
     return <div>
              <h1>Login</h1>
-             <LoginReduxForm onSubmit={onSubmit}/>
+             <LoginReduxForm onSubmit={submit}/>
            </div>
 }
-// onSubmit пока не используется или не работает
+// formData приходит , но в консоль не выводится
 export default Login;
 
