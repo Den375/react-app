@@ -29,6 +29,6 @@ const Login = props => {
              <LoginReduxForm onSubmit={onSubmit}/>
            </div>
 }
-
+// onSubmit пока не используется или не работает
 export default Login;
 
