@@ -8,9 +8,13 @@
     margin: 15px;
 }
 
-.header a {
+.header .login {
     text-decoration: none;
     float: right;
     margin: 15px;
+
 }
 
+button  {
+    margin: 5px;
+}

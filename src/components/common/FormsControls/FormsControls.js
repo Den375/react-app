@@ -1,7 +1,6 @@
 import React from 'react';
 import s from './FormsControls.module.css'
 
-
 const FormControl = ({input, meta,  ...restProps}) => {
     const hasError = meta.touched && meta.error
     return <div className={s.formControl + " " + (hasError && s.error) }>
