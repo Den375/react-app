@@ -7,7 +7,7 @@ const Header = (props) => {
         <img src='https://www.freelogodesign.org/Content/img/logo-ex-7.png' />
         {props.isAuth
             ? <div className={s.login} >
-                <a href="">{props.login}</a>
+                {props.login}
                 <button onClick={props.logout}>Выйти</button>
                </div>
 

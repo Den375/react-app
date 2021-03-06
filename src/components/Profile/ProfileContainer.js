@@ -29,6 +29,7 @@ const mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
+        authorizedUserId: state.auth.id,
     }
 }
 
@@ -39,7 +40,7 @@ export default compose(
         updateStatus
     }),
     withRouter,
-    /*withAuthRedirect*/
+    withAuthRedirect
 )(ProfileContainer)
 
 /*
