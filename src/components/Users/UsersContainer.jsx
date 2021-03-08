@@ -1,7 +1,7 @@
 import Users from "./Users";
 import {connect} from "react-redux";
 import {
-     getUsers,
+     requestUsers,
     setCurrentPage,
     follow, unfollow,
 } from "../../redux/users-reducer";
@@ -9,17 +9,25 @@ import React from "react";
 import Preloader from "../common/preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getIsFetching,
+    getIsFollowingProgress,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../redux/users-selectors";
 
 class UsersContainer extends React.Component {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize)
     }
 
 
     onPageChanged = (p) => {
         this.props.setCurrentPage(p)
-        this.props.getUsers(p, this.props.pageSize)
+        this.props.requestUsers(p, this.props.pageSize)
     }
 
     render() {
@@ -37,7 +45,7 @@ class UsersContainer extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+/*const mapStateToProps = (state) => {
         return {
             users: state.usersPage.users,
             currentPage: state.usersPage.currentPage,
@@ -46,12 +54,24 @@ const mapStateToProps = (state) => {
             isFetching: state.usersPage.isFetching,
             isFollowingProgress: state.usersPage.isFollowingProgress,
         }
+    }*/
+
+const mapStateToProps = (state) => {
+    return {
+        users: getUsers(state),
+        currentPage: getCurrentPage(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        isFetching: getIsFetching(state),
+        isFollowingProgress: getIsFollowingProgress(state),
     }
+}
 
 export default compose(
-    connect(mapStateToProps, {getUsers, setCurrentPage, follow, unfollow}),
+    connect(mapStateToProps, { requestUsers, setCurrentPage, follow, unfollow}),
     /*withAuthRedirect*/
 )(UsersContainer)
+
 
 /*const AuthRedirect = withAuthRedirect(UsersContainer)
 
