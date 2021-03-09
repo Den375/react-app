@@ -1,5 +1,5 @@
 import {createSelector} from "reselect";
-
+// зависимость
 const getUsersSelector = (state) => {
     return state.usersPage.users
 }
