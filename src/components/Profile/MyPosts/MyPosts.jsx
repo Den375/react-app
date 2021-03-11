@@ -5,8 +5,8 @@ import {Field, reduxForm} from "redux-form";
 import {Textarea} from "../../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../../utils/validators/validators";
 
-const MyPosts = (props) => {
-
+const MyPosts = React.memo((props) => {
+    console.log('render MyPosts')
     let postsElements =
         props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>);
 
@@ -23,7 +23,7 @@ const MyPosts = (props) => {
             </div>
         </div>
     )
-}
+})
 
 const maxLength15 = maxLengthCreator(15)
 
