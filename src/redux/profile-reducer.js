@@ -6,8 +6,9 @@ const SET_STATUS = 'SET_STATUS';
 
 const initialState = {
     posts: [
-        {id: 1, message: 'Изучаю React', likesCount: 12},
+        {id: 1, message: 'Изучаю React, и это мой первый пост', likesCount: 12},
         {id: 2, message: 'Я уже неплохо шарю', likesCount: 11},
+        {id: 2, message: 'Чтобы написать актуальненькое', likesCount: 14},
     ],
     profile: null,
     status: null
