@@ -45,7 +45,7 @@ const Login = props => {
              <LoginReduxForm onSubmit={submit}/>
            </div>
 }
-// formData приходит , но в консоль не выводится, что-то с консолью
+
 
 const mapStateToProps = (state) => {
     return {

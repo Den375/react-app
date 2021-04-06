@@ -19,6 +19,10 @@ class ProfileContainer extends React.Component {
         this.props.getStatus(userId)
     }
 
+    /*componentWillUnmount() {
+        alert('componentWillUnmount')
+    }*/
+
     render() {
 
         return <Profile {...this.props} />
