@@ -5,7 +5,8 @@ const ProfileStatusWithHooks = (props) => {
     let [editMode, setEditMode] = useState(false)
     let [status, setStatus] = useState(props.status)
 // Исходное значение аргумента используется только при первом рендере.
-//  В последующие же рендеринги useState возвращает текущее состояние.
+//  В последующие же рендеринги useState возвращает текущее состояние
+//  Если статус придет позже profile , то props.status будет отличаться от status локального
 // Нужно синхронизировать используем для этого useEffect
 
     useEffect(() => {

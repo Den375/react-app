@@ -58,12 +58,9 @@ const SocialNetwork = props => {
             <AppContainer/>
         </Provider>
     </HashRouter>
-
-
 }
 
 export default SocialNetwork;
-
 
 /*'/profile/:userId?'  profile/ тоже рендерит благодаря ?
 параметр становится опциональным*/
