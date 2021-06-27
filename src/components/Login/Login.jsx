@@ -9,6 +9,21 @@ import s from  "./Login.module.css"
 
 const maxLength50 = maxLengthCreator(50)
 
+const Login = props => {
+    const submit = (formData) => {
+        props.login(formData.email, formData.password, formData.rememberMe)
+    }
+
+    if (props.isAuth) {
+        return <Redirect to={'/profile'}/>
+    }
+
+    return <div>
+        <h1>Login</h1>
+        <LoginReduxForm onSubmit={submit}/>
+    </div>
+}
+
 const LoginForm = props => {
     return <form onSubmit={props.handleSubmit}>
             <div>
@@ -30,22 +45,6 @@ const LoginForm = props => {
 }
 
 const LoginReduxForm = reduxForm({form: 'login'})(LoginForm)
-
-const Login = props => {
-    const submit = (formData) => {
-        props.login(formData.email, formData.password, formData.rememberMe)
-    }
-
-    if (props.isAuth) {
-       return <Redirect to={'/profile'}/>
-    }
-
-    return <div>
-             <h1>Login</h1>
-             <LoginReduxForm onSubmit={submit}/>
-           </div>
-}
-
 
 const mapStateToProps = (state) => {
     return {

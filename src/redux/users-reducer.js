@@ -85,6 +85,11 @@ export const requestUsers = (page, pageSize) => async (dispatch) => {
             dispatch(setTotalUsersCount(data.totalCount))
 }
 
+export const onPageChanged = (p, pageSize) => (dispatch) => {
+    dispatch(setCurrentPage(p))
+    dispatch(requestUsers(p, pageSize))
+}
+
 export const unfollow = (userID) => async (dispatch) => {
         dispatch(toggleIsFollowingProgress(true, userID))
 

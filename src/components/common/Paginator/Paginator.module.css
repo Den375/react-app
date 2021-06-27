@@ -1,3 +1,7 @@
+.paginator {
+    margin: 10px;
+}
+
 .currentPage {
     font-weight: bold;
     color: red;
