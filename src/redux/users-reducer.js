@@ -41,7 +41,7 @@ const usersReducer = (state = initialState, action) => {
             }
 
         case SET_USERS:
-            return {...state, users: [...action.users]}
+            return {...state, users: [...action.users]}     /// если не сделать глубокую копию mapStateToProps не увидит изменение массива users
 
         case SET_CURRENT_PAGE:
             return {...state, currentPage: action.pageNumber }
@@ -56,8 +56,8 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 followingInProgress: action.progress
-                                     ? [...state.followingInProgress, action.disabledId]
-                                     : state.followingInProgress.filter(id => id != action.disabledId)
+                                     ? [...state.followingInProgress, action.disabledId]         // добавляем в массив
+                                     : state.followingInProgress.filter(id => id != action.disabledId) // достаем из массива
             }
 
         default:
@@ -80,9 +80,9 @@ export const requestUsers = (page, pageSize) => async (dispatch) => {
         dispatch(toggleIsFetching(true))
 
         const data = await usersAPI.getUsers(page, pageSize)
-            dispatch(toggleIsFetching(false))
             dispatch(setUsers(data.items))
             dispatch(setTotalUsersCount(data.totalCount))
+            dispatch(toggleIsFetching(false))
 }
 
 export const onPageChanged = (p, pageSize) => (dispatch) => {

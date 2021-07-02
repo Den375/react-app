@@ -2,6 +2,11 @@
     margin: 10px;
 }
 
+.paginator span {
+    border: 1px solid black;
+    padding: 5px;
+}
+
 .currentPage {
     font-weight: bold;
     color: red;

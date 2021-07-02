@@ -5,8 +5,8 @@ const getUsersSelector = (state) => {
 }
 
 export const getUsers = createSelector(getUsersSelector, (users) => {
-    return users.filter(u => true)
-})
+    return users.filter(u => true)  // если не использовать наш селектор, при каждом dispatch будет вызов mapState и в памяти будет создаваться новый массив
+})                                  // что ухудшит производительность. filter здесь излишний, для примера
 
 
 export const getCurrentPage = (state) => {
