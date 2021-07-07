@@ -1,4 +1,5 @@
 import {profileAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = 'social-network/profile/ADD_POST';
 const DELETE_POST = 'social-network/profile/DELETE_POST';
@@ -8,9 +9,9 @@ const SAVE_PHOTO_SUCCESS = 'social-network/profile/SAVE_PHOTO_SUCCESS'
 
 const initialState = {
     posts: [
-        {id: 1, message: 'Изучаю React, и это мой первый пост', likesCount: 12},
-        {id: 2, message: 'Я уже неплохо шарю', likesCount: 11},
-        {id: 3, message: 'Чтобы написать актуальненькое', likesCount: 14},
+        {id: 1, message: 'React Js учебный проект', likesCount: 12},
+        {id: 2, message: 'There are a very important posts', likesCount: 11},
+        {id: 3, message: 'Contains something great', likesCount: 14},
     ],
     profile: null,
     status: null
@@ -73,6 +74,19 @@ export const savePhoto = (file) => async (dispatch) => {
     const response = await profileAPI.savePhoto(file)
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+}
+
+export const saveProfile = (profile) => async (dispatch, getState) => {
+    const userId = getState().auth.userId
+
+    const response = await profileAPI.saveProfile(profile)
+
+    if (response.data.resultCode === 0) {
+        dispatch(getUserProfile(userId))
+    } else {
+        dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0]}))
+        return Promise.reject()
     }
 }
 
