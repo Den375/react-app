@@ -11,7 +11,7 @@ const maxLength50 = maxLengthCreator(50)
 
 const Login = props => {
     const submit = (formData) => {
-        props.login(formData.email, formData.password, formData.rememberMe)
+        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
     if (props.isAuth) {
@@ -20,7 +20,7 @@ const Login = props => {
 
     return <div>
         <h1>Login</h1>
-        <LoginReduxForm onSubmit={submit}/>
+        <LoginReduxForm onSubmit={submit} captchaUrl={props.captchaUrl}/>
     </div>
 }
 
@@ -35,6 +35,8 @@ const LoginForm = props => {
             <div>
                 <Field name="rememberMe" component={Input} type="checkbox" /> Запомнить меня
             </div>
+            {props.captchaUrl && <img src={props.captchaUrl}/>}
+            {props.captchaUrl && <Field name="captcha" placeholder='Введите символы' component={Input} validate={[required, maxLength50 ]} type="text" />}
             <div className={s.commonError}>
                 {props.error}
             </div>
@@ -48,7 +50,8 @@ const LoginReduxForm = reduxForm({form: 'login'})(LoginForm)
 
 const mapStateToProps = (state) => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captchaUrl: state.auth.captchaUrl
     }
 }
 
