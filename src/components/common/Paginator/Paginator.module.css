@@ -2,12 +2,12 @@
     margin: 10px;
 }
 
-.paginator span {
+.pageNumber{
     border: 1px solid black;
     padding: 5px;
 }
 
-.currentPage {
+.pageNumber.currentPage {
     font-weight: bold;
     color: red;
     font-size: 20px;

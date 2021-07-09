@@ -5,6 +5,7 @@
   "homepage": "http://Den375.github.io/react-app",
   "dependencies": {
     "axios": "^0.21.1",
+    "classnames": "^2.2.6",
     "dom": "^0.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

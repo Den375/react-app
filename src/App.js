@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {HashRouter, Route, withRouter} from "react-router-dom";
+import {HashRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -15,9 +15,16 @@ const UsersContainer = React.lazy(() => import('./components/Users/UsersContaine
 const LoginPage = React.lazy(() => import("./components/Login/Login"));
 
 class App extends React.Component {
-
+    catchAllUnhandledErrors = (reason, promise) => {
+        alert(`Some error occured`);
+        //console.error(promiseRejectionEvent);
+    }
     componentDidMount() {
-        this.props.initializeApp()
+        this.props.initializeApp();
+        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
+    }
+    componentWillUnmount() {
+        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
 
     render() {
@@ -30,12 +37,16 @@ class App extends React.Component {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/profile/:userId?' component={ProfileContainer}/>
-                    <Route path='/dialogs' component={DialogsContainer}/>
-                    <Suspense fallback={<div> <Preloader/> </div>}>
-                        <Route path='/users' component={UsersContainer}/>
-                        <Route path='/login' component={LoginPage}/>
-                    </Suspense>
+                    <Switch>
+                        <Route exact path='/' render={() => <Redirect to={'/profile'}/>} />
+                        <Route path='/profile/:userId?' component={ProfileContainer}/>
+                        <Route path='/dialogs' component={DialogsContainer}/>
+                        <Suspense fallback={<div> <Preloader/> </div>}>
+                            <Route path='/users' component={UsersContainer}/>
+                            <Route path='/login' component={LoginPage}/>
+                        </Suspense>
+                        <Route path='*' render={() => <div>404 NOT FOUND</div>}/> // чтобы заработало нужно suspense отдать внутрь Route видимо
+                    </Switch>
                 </div>
             </div>
         )

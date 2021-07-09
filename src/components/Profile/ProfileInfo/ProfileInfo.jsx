@@ -26,7 +26,7 @@ const ProfileInfo = (props) => {
     const onSubmit = (formData) => {
         props.saveProfile(formData).then(() => {
             setEditMode(false)
-        })
+        }).catch(() => {})
         // в идеале убрать асинхронность в бизнес уровень, я так понимаю нужно создать флаг в state и
             // использовать useEffect
     }
