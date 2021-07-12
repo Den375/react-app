@@ -42,7 +42,7 @@ class App extends React.Component {
                         <Route path='/profile/:userId?' component={ProfileContainer}/>
                         <Route path='/dialogs' component={DialogsContainer}/>
                         <Suspense fallback={<div> <Preloader/> </div>}>
-                            <Route path='/users' component={UsersContainer}/>
+                            <Route path='/users' render={() => <UsersContainer pageTitle={'React Juniors list'}/>}/>
                             <Route path='/login' component={LoginPage}/>
                         </Suspense>
                         <Route path='*' render={() => <div>404 NOT FOUND</div>}/> // чтобы заработало нужно suspense отдать внутрь Route видимо

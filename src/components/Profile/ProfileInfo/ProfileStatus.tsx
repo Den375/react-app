@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 
-class ProfileStatus extends React.Component {
+type PropsType = {
+    status: string
+    updateStatus: (newStatus: string) => void
+}
+
+type StateType = {
+    editMode: boolean
+    status: string
+}
+
+class ProfileStatus extends React.Component<PropsType, StateType> {
 
     state = {
         editMode: false,
-        status: this.props.status
+        status: this.props.status // по приходу нового статуса локальный статус не синхронизирован со статусом из пропсов, делаем DidUpdate
     }
      /*!!!
      connect апдейтит this.props но не this.state, который после создания объекта не изменится
@@ -27,13 +37,13 @@ class ProfileStatus extends React.Component {
         this.props.updateStatus(this.state.status)
     }
 
-    onStatusChange = (e) => {
+    onStatusChange = (e: ChangeEvent<HTMLInputElement> ) => {
        this.setState({
            status: e.currentTarget.value
        })
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps: PropsType, prevState: StateType) {
         // условие чтобы не зациклился апдейт
         if (prevProps.status !== this.props.status ) {
             this.setState({

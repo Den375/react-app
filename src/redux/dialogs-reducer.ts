@@ -1,10 +1,10 @@
 const ADD_MESSAGE = 'social-network/dialogs/ADD-MESSAGE';
 
-type DialogType = {
+export type DialogType = {
     id: number
     name: string
 }
-type MessageType = {
+export type MessageType = {
     id: number
     message: string
 }
