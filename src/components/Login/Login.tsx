@@ -1,16 +1,34 @@
 import React from 'react'
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import s from  "./Login.module.css"
+import {AppStateType} from "../../redux/redux-store";
 
 const maxLength50 = maxLengthCreator(50)
 
-const Login = props => {
-    const submit = (formData) => {
+type MapStatePropsType = {
+    isAuth: boolean
+    captchaUrl: string | null
+}
+
+type MapDispatchPropsType = {
+    login: (email:string, password:string, rememberMe:boolean, captcha:string)  => void
+}
+
+type LoginFormValuesType = {
+    captcha: string;
+    rememberMe: boolean;
+    password: string;
+    email: string;
+
+}
+
+const Login: React.FC<MapStatePropsType & MapDispatchPropsType> = props => {
+    const submit = (formData: LoginFormValuesType) => {
         props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
@@ -24,7 +42,11 @@ const Login = props => {
     </div>
 }
 
-const LoginForm = props => {
+type LoginFormOwnProps = {
+    captchaUrl: string | null
+}
+
+const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnProps> & LoginFormOwnProps> = props => {
     return <form onSubmit={props.handleSubmit}>
             <div>
                 <Field name="email" placeholder='Введите email' component={Input} validate={[required, maxLength50 ]} type="text" />
@@ -33,9 +55,9 @@ const LoginForm = props => {
                 <Field name="password" placeholder='Введите пароль' component={Input} validate={[required, maxLength50 ]} type="password" />
             </div>
             <div>
-                <Field name="rememberMe" component={Input} type="checkbox" /> Запомнить меня
+                <Field name="rememberMe" component={Input} type="checkbox" />  Запомнить меня
             </div>
-            {props.captchaUrl && <img src={props.captchaUrl}/>}
+            {props.captchaUrl && <img src={props.captchaUrl} alt='captcha'/>}
             {props.captchaUrl && <Field name="captcha" placeholder='Введите символы' component={Input} validate={[required, maxLength50 ]} type="text" />}
             <div className={s.commonError}>
                 {props.error}
@@ -46,9 +68,9 @@ const LoginForm = props => {
            </form>
 }
 
-const LoginReduxForm = reduxForm({form: 'login'})(LoginForm)
+const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnProps>({form: 'login'})(LoginForm)
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         isAuth: state.auth.isAuth,
         captchaUrl: state.auth.captchaUrl
