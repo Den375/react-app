@@ -1,4 +1,4 @@
-import profileReducer, {addPostActionCreator, deletePost, setStatus, setUserProfile} from "./profile-reducer";
+import profileReducer, {actions} from "./profile-reducer";
 
 let state = {
     posts: [
@@ -7,12 +7,13 @@ let state = {
         {id: 3, message: 'Чтобы написать актуальненькое', likesCount: 14},
     ],
     profile: null,
-    status: null
+    status: '',
+    newPostText: ''
 };
 
 it('add post, length of posts should be incremented', () => {
     // test data
-    const action = addPostActionCreator('Hello')
+    const action = actions.addPostActionCreator('Hello')
 
     const newState = profileReducer(state, action)
     // expectation
@@ -21,7 +22,7 @@ it('add post, length of posts should be incremented', () => {
 
 it('add post, message of new post should be correct', () => {
     // test data
-    const action = addPostActionCreator('Hello')
+    const action = actions.addPostActionCreator('Hello')
 
     const newState = profileReducer(state, action)
     // expectation
@@ -30,7 +31,7 @@ it('add post, message of new post should be correct', () => {
 
 it('delete post, length of posts should be decremented', () => {
     // test data
-    const action = deletePost(1)
+    const action = actions.deletePost(1)
 
     const newState = profileReducer(state, action)
     // expectation
@@ -39,25 +40,16 @@ it('delete post, length of posts should be decremented', () => {
 
 it('delete post, after deleting length of posts should`t be changed if id is incorrect', () => {
     // test data
-    const action = deletePost(7213)
+    const action = actions.deletePost(7213)
 
     const newState = profileReducer(state, action)
     // expectation
     expect(newState.posts.length).toBe(3);
 });
 
-it('profile changed', () => {
-    // test data
-    const action = setUserProfile({user: 'denis'})
-
-    const newState = profileReducer(state, action)
-
-    expect(newState.profile.user).toBe('denis')
-});
-
 it('status changed', () => {
     // test data
-    const action = setStatus('i`m best of the best')
+    const action = actions.setStatus('i`m best of the best')
 
     const newState = profileReducer(state, action)
 
