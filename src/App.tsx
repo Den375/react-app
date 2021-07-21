@@ -9,14 +9,19 @@ import Preloader from "./components/common/preloader/Preloader";
 import {compose} from "redux";
 import {connect, Provider} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
-import store from "./redux/redux-store";
+import store, {AppStateType} from "./redux/redux-store";
 
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 const LoginPage = React.lazy(() => import("./components/Login/Login"));
 
-class App extends React.Component {
-    catchAllUnhandledErrors = (reason, promise) => {
-        alert(`Some error occured`);
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+    initializeApp: () => void
+}
+
+class App extends React.Component<MapPropsType & DispatchPropsType> {
+    catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
+        alert(`Some error occurred`);
         //console.error(promiseRejectionEvent);
     }
     componentDidMount() {
@@ -53,17 +58,17 @@ class App extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         initialized: state.app.initialized
     }
 }
 
-const AppContainer = compose(
+const AppContainer = compose<React.ComponentType>(
     withRouter,
     connect(mapStateToProps, {initializeApp}))(App);
 
-const SocialNetwork = props => {
+const SocialNetwork: React.FC = () => {
     return <HashRouter>
         <Provider store={store}>
             <AppContainer/>

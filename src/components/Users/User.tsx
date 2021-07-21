@@ -2,8 +2,17 @@ import s from "./User.module.css";
 import {NavLink} from "react-router-dom";
 import userDefPhoto from "../../assets/images/defaultAvatar.jpg";
 import React from "react";
+import {UserType} from "../../types/types";
 
-const User = ({user, isAuth, followingInProgress, unfollow, follow}) => {
+type PropsType = {
+    user: UserType
+    isAuth: boolean
+    followingInProgress: Array<number>
+    unfollow: (userID: number) => void
+    follow: (userID: number) => void
+}
+
+const User: React.FC<PropsType> = ({user, isAuth, followingInProgress, unfollow, follow}) => {
     return <div className={s.userContainer} >
         <div className={s.class1}>
             <div>
@@ -22,11 +31,11 @@ const User = ({user, isAuth, followingInProgress, unfollow, follow}) => {
         </div>
         <div className={s.class2}>
             <div>{user.name}</div>
-            <div>{'u.location.city'}</div>
+            <div>{'user.location.city'}</div>
             <div></div>
             <div></div>
-            <div>{'u.status'}</div>
-            <div>{'u.location.country'}</div>
+            <div>{user.status}</div>
+            <div>{'user.location.country'}</div>
         </div>
     </div>
 }

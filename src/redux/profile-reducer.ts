@@ -11,8 +11,7 @@ const initialState = {
         {id: 3, message: 'Contains something great', likesCount: 14},
     ] as Array<PostType>,
     profile: null as ProfileType | null,
-    status: '',
-    newPostText: ''
+    status: ''
 };
 
 const profileReducer = (state = initialState, action: ActionsType):InitialStateType => {

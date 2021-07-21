@@ -2,16 +2,27 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../common/FormsControls/FormsControls";
 import {maxLengthCreator} from "../../utils/validators/validators";
+import {DialogType, MessageType} from "../../redux/dialogs-reducer";
 
-const Dialogs = (props) => {
+type PropsType = {
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
+    addMessage: (messageText: string) => void
+}
+
+export type NewMessageFormValuesType = {
+    newMessageBody: string
+}
+
+const Dialogs: React.FC<PropsType> = (props) => {
 
     let dialogsElements = props.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
     let messagesElements = props.messages.map(m => <Message message={m.message}/>);
 
-    const sendMessage = (values) => {
+    const sendMessage = (values: NewMessageFormValuesType) => {
         props.addMessage(values.newMessageBody)
     }
 
@@ -28,10 +39,10 @@ const Dialogs = (props) => {
 
 export const maxLength40 = maxLengthCreator(40)
 
-const AddMessageForm = props => {
+const AddMessageForm: React.FC<InjectedFormProps<NewMessageFormValuesType>> = props => {
     return <form onSubmit={props.handleSubmit}>
                 <div className={s.sendMessage}>
-                    <Field name="newMessageBody" component={Textarea} validate={maxLength40}
+                    <Field name='newMessageBody' component={Textarea} validate={maxLength40}
                            type="text" placeholder='Введите сообщение'/>
                 </div>
                 <div>
@@ -40,6 +51,6 @@ const AddMessageForm = props => {
            </form>
 }
 
-const AddMessageFormRedux = reduxForm({form: 'dialogAddMessageForm'})(AddMessageForm)
+const AddMessageFormRedux = reduxForm<NewMessageFormValuesType>({form: 'dialogAddMessageForm'})(AddMessageForm)
 
 export default Dialogs;

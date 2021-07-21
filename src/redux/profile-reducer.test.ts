@@ -7,8 +7,7 @@ let state = {
         {id: 3, message: 'Чтобы написать актуальненькое', likesCount: 14},
     ],
     profile: null,
-    status: '',
-    newPostText: ''
+    status: ''
 };
 
 it('add post, length of posts should be incremented', () => {

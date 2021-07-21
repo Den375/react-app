@@ -3,7 +3,15 @@ import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
 import logo from '../../assets/images/companyLogo.png'
 
-const Header = (props) => {
+export type MapPropsType = {
+    isAuth: boolean
+    login: string | null
+}
+export type DispatchPropsType = {
+    logout: () => void
+}
+
+const Header: React.FC<MapPropsType & DispatchPropsType> = (props) => {
     return <header className={s.header}>
         <img src={logo} />
         {props.isAuth
