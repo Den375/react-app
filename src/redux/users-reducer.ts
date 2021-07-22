@@ -20,7 +20,8 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
             return  {...state,
                 users: state.users.map( u => {
                     if (u.id === action.userID) {
-                       return {...u, followed: true}  /// иммутабельность, все что изменяем делаем глубокую копию
+                       return {...u, followed: true}  /// иммутабельность, данные приходящие в чистую ф-ю делаем глубокую копию
+                                  // объекты изменятся по ссылке в первоисточнике
                     }
                     return u
                 })
@@ -45,10 +46,10 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
         case "SET_TOTAL_USERS_COUNT":
             return {...state, totalUsersCount: action.totalUsersCount }
 
-        case "TOOGLE_IS_FETCHING":
+        case "TOGGLE_IS_FETCHING":
             return {...state, isFetching: action.isFetching }
 
-        case "TOOGLE_IS_FOLLOWING_PROGRESS":
+        case "TOGGLE_IS_FOLLOWING_PROGRESS":
             return {
                 ...state,
                 followingInProgress: action.progress
@@ -62,12 +63,12 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
 }
 
 export const actions = {
-     toggleIsFetching: (isFetching: boolean)=> ({type: 'TOOGLE_IS_FETCHING', isFetching} as const),
+     toggleIsFetching: (isFetching: boolean)=> ({type: 'TOGGLE_IS_FETCHING', isFetching} as const),
      setUsers: (users: Array<UserType>) => ({type: 'SET_USERS', users} as const),
      setTotalUsersCount: (totalUsersCount: number) => ({type: 'SET_TOTAL_USERS_COUNT', totalUsersCount} as const),
      followSuccess: (userID: number) => ({type: 'FOLLOW', userID} as const),
      unFollowSuccess: (userID: number) => ({type: 'UNFOLLOW', userID} as const),
-     toggleIsFollowingProgress: (progress: boolean, disabledId: number) => ({type: 'TOOGLE_IS_FOLLOWING_PROGRESS', progress, disabledId} as const),
+     toggleIsFollowingProgress: (progress: boolean, disabledId: number) => ({type: 'TOGGLE_IS_FOLLOWING_PROGRESS', progress, disabledId} as const),
      setCurrentPage: (pageNumber: number) => ({type: 'SET_CURRENT_PAGE', pageNumber} as const),
 }
 
@@ -108,6 +109,6 @@ export const follow = (userID: number): ThunkType => async (dispatch) => {
 
 export default usersReducer;
 
-type InitialStateType = typeof initialState;
+export type InitialStateType = typeof initialState;
 type ActionsType = InferActionsTypes<typeof actions>
 type ThunkType = BaseThunkType<ActionsType>
