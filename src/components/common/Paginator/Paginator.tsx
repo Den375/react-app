@@ -6,7 +6,7 @@ type PropsType = {
     totalUsersCount: number
     pageSize: number
     currentPage?: number
-    onPageChanged?: (pageNumber: number, pageSize: number) => void
+    onPageChanged?: (pageNumber: number) => void
     portionSize?: number
 }
 
@@ -30,16 +30,16 @@ type PropsType = {
     return <div className={s.paginator}>
 
         { portionNumber > 1 &&
-        <button onClick={() => { setPortionNumber(portionNumber - 1) }}>PREV</button> }
+        <button onClick={() => { setPortionNumber(portionNumber - 1), onPageChanged(leftPortionPageNumber - portionSize) }}>PREV</button> }
 
         {pages.filter(p => p >= leftPortionPageNumber && p<=rightPortionPageNumber)
                 .map( p => {
                 return <span className={cn(s.pageNumber, {[s.currentPage]: currentPage === p})}
-                             onClick={() => onPageChanged(p, pageSize)}> {p} </span>
+                             onClick={() => onPageChanged(p)}> {p} </span>
             })}
 
         { portionCount > portionNumber &&
-        <button onClick={() => { setPortionNumber(portionNumber + 1) }}>NEXT</button> }
+        <button onClick={() => { setPortionNumber(portionNumber + 1), onPageChanged(leftPortionPageNumber + portionSize) }}>NEXT</button> }
 
          </div>
 }
