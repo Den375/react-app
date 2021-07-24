@@ -1,96 +1,25 @@
-import Users from "./Users";
-import {connect} from "react-redux";
-import {requestUsers, follow, unfollow, FilterType} from "../../redux/users-reducer";
-import React from "react";
+import {Users} from "./Users";
+import {useSelector} from "react-redux";
+import React, {FC} from "react";
 import Preloader from "../common/preloader/Preloader";
-import {compose} from "redux";
-import {
-    getCurrentPage,
-    getIsFetching,
-    getFollowingInProgress,
-    getPageSize,
-    getTotalUsersCount,
-    getUsers,
-    getIsAuth, getUsersFilter
-} from "../../redux/users-selectors";
-import {UserType} from "../../types/types";
-import {AppStateType} from "../../redux/redux-store";
+import {getIsFetching} from "../../redux/users-selectors";
 
-type MapStatePropsType = {
-    currentPage: number
-    pageSize: number
-    isFetching: boolean
-    totalUsersCount: number
-    users: Array<UserType>
-    followingInProgress: Array<number>
-    isAuth: boolean
-    filter: FilterType
-}
-
-type MapDispatchPropsType = {
-    requestUsers: (currentPage: number, pageSize: number, filter: FilterType) => void
-    unfollow: (userID: number) => void
-    follow: (userID: number) => void
-}
-
-type OwnPropsType = {
+type PropsType = {
     pageTitle: string
 }
 
-type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
+const UsersPage: FC<PropsType> = (props) => {
 
-class UsersContainer extends React.Component<PropsType> {
+    const isFetching = useSelector(getIsFetching)
 
-    componentDidMount() {
-        const {currentPage, pageSize, filter} = this.props
-        this.props.requestUsers(currentPage, pageSize, filter)
-    }
-
-    onPageChanged = (p: number) => {
-        const {pageSize, filter} = this.props
-        this.props.requestUsers(p, pageSize, filter)
-    }
-
-    onFilterChanged = (filter: FilterType) => {
-        const {pageSize} = this.props
-        this.props.requestUsers(1, pageSize, filter)
-    }
-
-    render() {
-        return <><h3>{this.props.pageTitle}</h3>
-                 {this.props.isFetching ? <Preloader/> : null}
-                 <Users totalUsersCount={this.props.totalUsersCount}
-                         pageSize={this.props.pageSize}
-                         currentPage={this.props.currentPage}
-                         users={this.props.users}
-                         onPageChanged={this.onPageChanged}
-                         onFilterChanged={this.onFilterChanged}
-                         unfollow={this.props.unfollow}
-                         follow={this.props.follow}
-                         followingInProgress={this.props.followingInProgress}
-                         isAuth={this.props.isAuth}
-                 />
-               </>
-    }
+    return <div>
+        <h3>{props.pageTitle}</h3>
+        {isFetching ? <Preloader/> : null}
+        <Users/>
+    </div>
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-    return {
-        users: getUsers(state),
-        currentPage: getCurrentPage(state),
-        pageSize: getPageSize(state),
-        totalUsersCount: getTotalUsersCount(state),
-        isFetching: getIsFetching(state),
-        followingInProgress: getFollowingInProgress(state),
-        isAuth: getIsAuth(state),
-        filter: getUsersFilter(state)
-    }
-}
-
-export default compose(
-    connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, { requestUsers, follow, unfollow}),
-    /*withAuthRedirect*/
-)(UsersContainer)
+export default UsersPage
 
 /*const AuthRedirect = withAuthRedirect(UsersContainer)
 

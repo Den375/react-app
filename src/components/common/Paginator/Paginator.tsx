@@ -1,6 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import s from "./Paginator.module.css";
 import cn from "classnames"
+import {useSelector} from "react-redux";
+import {getUsersFilter} from "../../../redux/users-selectors";
 
 type PropsType = {
     totalUsersCount: number
@@ -26,6 +28,11 @@ type PropsType = {
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;
 
+    const filter = useSelector(getUsersFilter)
+
+     useEffect(() => {
+         setPortionNumber(1)
+     }, [filter])
 
     return <div className={s.paginator}>
 
