@@ -14,7 +14,7 @@ const initialState = {
         term: '',
         friend: null as null | boolean
     }
-};
+}
 
 const usersReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -24,7 +24,7 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
                 users: state.users.map( u => {
                     if (u.id === action.userID) {
                        return {...u, followed: true}  /// иммутабельность, данные приходящие в чистую ф-ю делаем глубокую копию
-                                  // объекты изменятся по ссылке в первоисточнике
+                                                /// если меняется объект делаем его глубокую копию
                     }
                     return u
                 })
@@ -53,7 +53,7 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
             return {...state, isFetching: action.isFetching }
 
         case 'SN/USERS/SET_FILTER': {
-            return {...state, filter: action.payload}
+            return {...state, filter: {...action.payload}}
         }
 
         case 'SN/USERS/TOGGLE_IS_FOLLOWING_PROGRESS':
