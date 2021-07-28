@@ -5,6 +5,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userDefPhoto from "../../../assets/images/defaultAvatar.jpg"
 import ProfileDataForm from "./ProfileDataForm";
 import {ContactsType, ProfileType} from "../../../types/types";
+import {Button} from "antd";
 
 export type PropsType = {
     profile: ProfileType | null
@@ -42,25 +43,24 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
             // использовать useEffect
     }
 
-    return (
-        <div>
-            <div>
-                <img width='700 px' height='120 px'
-                    src='https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350'
-                />
-            </div>
-            <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large || userDefPhoto} alt="photo" max-width='200px'/>
-                {props.isOwner && <input type={"file"} onChange={onMainPhotoSelected}/>}
-
+    return <div className={s.descriptionBlock}>
+                <div>
+                    <img src={props.profile.photos.large || userDefPhoto} alt="photo" max-width='200px'/>
+                </div>
+                {props.isOwner && <div>
+                                      <label htmlFor="filePicker" style={{ background:"grey", padding:"5px 10px" }}>
+                                           Change Avatar...
+                                      </label>
+                                      <input  id="filePicker" style={{visibility:"hidden"}} type={"file"}
+                                              onChange={onMainPhotoSelected}/>
+                                </div>
+                }
                 {editMode ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit}/> :
                             <ProfileData profile={props.profile} isOwner={props.isOwner} goToEditMode={goToEditMode}/>}
 
                 <ProfileStatusWithHooks status={props.status}
                                 updateStatus={props.updateStatus}/>
             </div>
-        </div>
-    )
 }
 
 type ProfileDataPropsType = {
@@ -72,7 +72,8 @@ type ProfileDataPropsType = {
 const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, goToEditMode}) => {
     return <div>
     <div>
-        {isOwner ? <button onClick={goToEditMode}>edit</button> : null}
+        {isOwner
+            ? <Button type="primary" onClick={goToEditMode}>edit profile</Button> : null}
     </div>
     <div>
         <b>Full name</b>: {profile.fullName}

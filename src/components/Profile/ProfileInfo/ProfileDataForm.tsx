@@ -3,6 +3,7 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input, Textarea} from "../../common/FormsControls/FormsControls";
 import s from './ProfileDataForm.module.css'
 import {ProfileType} from "../../../types/types";
+import {Button} from "antd";
 
 type ProfileFormFormOwnProps = {
     profile: ProfileType
@@ -12,7 +13,7 @@ type ProfileFormFormOwnProps = {
 const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, ProfileFormFormOwnProps> & ProfileFormFormOwnProps> = ({handleSubmit, profile, error}) => {
     return <form onSubmit={handleSubmit}>
         <div>
-            <button>Save</button>
+            <button >Save</button>
         </div>
         <div className={s.commonError}>
             {error}

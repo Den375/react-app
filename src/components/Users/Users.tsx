@@ -1,20 +1,21 @@
-import React, {useEffect} from "react";
-import Paginator from "../common/Paginator/Paginator";
-import User from "./User";
-import {UsersSearchForm} from "./UsersSearchForm";
-import {FilterType, follow, requestUsers, unfollow} from "../../redux/users-reducer";
-import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect} from "react"
+import Paginator from "../common/Paginator/Paginator"
+import User from "./User"
+import {UsersSearchForm} from "./UsersSearchForm"
+import {FilterType, follow, requestUsers, unfollow} from "../../redux/users-reducer"
+import {useDispatch, useSelector} from "react-redux"
 import {
     getCurrentPage,
     getFollowingInProgress,
-    getIsAuth,
     getPageSize,
     getTotalUsersCount,
     getUsers,
     getUsersFilter
-} from "../../redux/users-selectors";
-import { useHistory } from "react-router-dom";
-import * as queryString from "querystring";
+} from "../../redux/users-selectors"
+import {selectIsAuth} from "../../redux/auth-selectors"
+import { useHistory } from "react-router-dom"
+import * as queryString from "querystring"
+
 
 
 type PropsType = {}
@@ -32,7 +33,7 @@ export const Users: React.FC<PropsType> = () => {
     const pageSize = useSelector(getPageSize)
     const filter = useSelector(getUsersFilter)
     const followingInProgress = useSelector(getFollowingInProgress)
-    const isAuth = useSelector(getIsAuth)
+    const isAuth = useSelector(selectIsAuth)
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -71,7 +72,7 @@ export const Users: React.FC<PropsType> = () => {
         if (currentPage !== 1) query.page = String(currentPage)
 
         history.push({
-            pathname: '/users',
+            pathname: '/developers',
             search: queryString.stringify(query)
         })
     }, [filter, currentPage])
