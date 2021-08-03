@@ -34,10 +34,20 @@ type PropsType = {
          setPortionNumber(Math.ceil(currentPage/10))
      }, [filter])
 
+     const callback = () => {
+         onPageChanged(leftPortionPageNumber - portionSize)
+         setPortionNumber(portionNumber - 1)
+     }
+
+     const callback2 = () => {
+         onPageChanged(leftPortionPageNumber + portionSize)
+         setPortionNumber(portionNumber + 1)
+     }
+
     return <div className={s.paginator}>
 
         { portionNumber > 1 &&
-        <button onClick={() => { setPortionNumber(portionNumber - 1), onPageChanged(leftPortionPageNumber - portionSize) }}>PREV</button> }
+        <button onClick={callback}>PREV</button> }
 
         {pages.filter(p => p >= leftPortionPageNumber && p<=rightPortionPageNumber)
                 .map( p => {
@@ -46,7 +56,7 @@ type PropsType = {
             })}
 
         { portionCount > portionNumber &&
-        <button onClick={() => { setPortionNumber(portionNumber + 1), onPageChanged(leftPortionPageNumber + portionSize) }}>NEXT</button> }
+        <button onClick={callback2}>NEXT</button> }
 
          </div>
 }
