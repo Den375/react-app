@@ -35,6 +35,7 @@ const Chat: FC = () => {
         return () => {
             ws.removeEventListener('close', closeHandler)
             ws.close()
+            console.log('close')
         }
     },[])
 
@@ -49,6 +50,7 @@ const Messages: FC<{wsChannel: WebSocket | null}> = ({wsChannel}) => {
     const [messages, setMessages] = useState<ChatMessageType[]>([])
 
     useEffect(() => {
+        setMessages([])
         const messageHandler = (e: MessageEvent) => {
             let newMessages = JSON.parse(e.data)
             setMessages((prevMessages) => [...prevMessages, ...newMessages])
