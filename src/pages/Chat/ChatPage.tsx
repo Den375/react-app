@@ -48,9 +48,8 @@ const Message: FC<{ message: ChatMessageType }> = ({message}) => {
 
 const AddMessageForm: FC = () => {
     const [message, setMessage] = useState('')
-    const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending')
-
     const dispatch = useDispatch()
+    const status = useSelector((state: AppStateType) => state.chat.status)
 
     const send = () => {
         if (!message) return
@@ -64,7 +63,7 @@ const AddMessageForm: FC = () => {
             <textarea onChange={(e) => setMessage(e.currentTarget.value)} value={message}></textarea>
         </div>
         <div>
-            <Button disabled={false} onClick={send}>Send</Button>
+            <Button disabled={status === 'pending'} onClick={send}>Send</Button>
         </div>
     </div>
 }
